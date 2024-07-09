@@ -1,3 +1,11 @@
+-------------------------------------------------------------------------------
+---------         GERARD ANTONY CARAMAZZA VILÁ (45983867J)            ---------
+---------                 EXAMEN ADBD 09/07/2024                      ---------
+-------------------------------------------------------------------------------
+
+-------------------------------------------------------------------------------
+---------                        EJERCICIO 2                          ---------
+-------------------------------------------------------------------------------
 -- Crear la base de datos
 CREATE DATABASE farmacia;
 USE farmacia;
@@ -155,3 +163,22 @@ INSERT INTO Pago (FechaPago, Monto, CodigoVenta) VALUES
 ('2024-07-12', 49.00, 3),
 ('2024-07-13', 60.00, 4),
 ('2024-07-14', 63.00, 5);
+
+-------------------------------------------------------------------------------
+---------                        EJERCICIO 3                          ---------
+-------------------------------------------------------------------------------
+-- Crear trigger
+-- Este trigger se activa después de una inserción en la tabla Compra.
+-- Actualiza las unidades en stock y unidades vendidas en la tabla Medicamento.
+DELIMITER //
+CREATE TRIGGER ActualizarStockYVentasDespuesDeCompra
+AFTER INSERT ON Compra
+FOR EACH ROW
+BEGIN
+    UPDATE Medicamento
+    SET UnidadesEnStock = UnidadesEnStock - NEW.UnidadesCompradas,
+        UnidadesVendidas = UnidadesVendidas + NEW.UnidadesCompradas
+    WHERE CodigoMedicamento = NEW.CodigoMedicamento;
+END;
+//
+DELIMITER ;
