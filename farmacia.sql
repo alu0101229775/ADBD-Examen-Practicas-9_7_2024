@@ -75,6 +75,12 @@ CREATE TABLE Medicamento (
     CodigoLaboratorio INT,
     FOREIGN KEY (CodigoFamilia) REFERENCES Familia(CodigoFamilia),
     FOREIGN KEY (CodigoLaboratorio) REFERENCES Laboratorio(CodigoLaboratorio)
+    -------------------------------------------------------------------------------
+    ---------                        EJERCICIO 4                          ---------
+    -------------------------------------------------------------------------------
+    -- Restricción CHECK para asegurar que el PrecioVenta es mayor que el Precio
+    CONSTRAINT chk_precio CHECK (PrecioVenta > Precio)
+    -------------------------------------------------------------------------------
 );
 
 -- Tabla Venta
